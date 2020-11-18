@@ -1,0 +1,16 @@
+<section fxFlex="100%" fxLayout="column" fxLayoutAlign="center center" style="margin-top: 10px;">
+    <h1>Add comment</h1>
+    <br>
+    <form [formGroup]="commentForm" fxLayout="column" fxLayoutAlign="center center">
+
+        <mat-form-field>
+            <input type="text" matInput formControlName="content" placeholder="Add comment" required>
+        </mat-form-field>
+        <div>
+
+            <button mat-raised-button color="accent" (click)="onNoClick()">Cancel</button>&nbsp;
+            <button mat-raised-button color="accent" (click)="onSubmit()">Add</button>
+
+        </div>
+    </form>
+</section>

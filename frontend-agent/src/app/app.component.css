@@ -1,0 +1,13 @@
+html, body {
+    height: 100%;
+  }
+  
+  .content {
+    height: 100%;
+    
+  
+  }
+  
+  .example-spacer {
+    flex: 1 2 auto;
+  }

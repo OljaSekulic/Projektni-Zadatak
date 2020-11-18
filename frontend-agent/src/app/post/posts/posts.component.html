@@ -1,0 +1,157 @@
+<div fxLayoutAlign="center" style="margin-top: 20px;">
+    <button mat-raised-button color="accent" (click)="openModalDialog()">
+        <mat-icon>add</mat-icon>New post
+    </button>
+</div>
+<div class="content" fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="10px">
+
+
+    <div>
+        <mat-card *ngFor="let post of posts" style="margin-top: 50px;">
+            <div fxLayout="row" fxLayoutAlign="center center">
+
+                <div fxFlex>
+                    <mat-card-header fxLayout="row" fxLayoutAlign="center">
+                        <div fxFlex>
+                            <mat-card-title>{{getUsername(post)}}
+
+                            </mat-card-title>
+
+                        </div>
+                        <div>
+                            {{getAvg(post)}}
+                            <star-rating value="5" [totalstars]="5" checkedcolor="yellow" uncheckedcolor="orange"
+                                size="24px" readonly="false" (rate)="onRate($event, post)"></star-rating>
+                        </div>
+                    </mat-card-header>
+
+                    <mat-card-content fxLayout="row" fxLayoutAlign="center center">
+                        <table fxFlex="30%">
+                            <tbody>
+
+                                <tr>
+                                    <td style="font-weight:300; font-size: medium;">Text: {{post?.text}}</td>
+
+                                </tr>
+                                <tr style="font-size: 80%;">
+                                    {{post.postDate | date : 'yyyy-MM-dd HH:mm:ss'}}
+                                </tr>
+                                <hr style="width:500px;" />
+                                <tr>
+
+                                    <td>
+                                        <div style="display: inline-block;
+                                                text-align: center;">
+                                            <button mat-mini-fab color="primary"
+                                                style="width: 30px; height: 30px; margin:5px;" (click)="editPost(post)">
+                                                <mat-icon style="font-size: 20px;">edit</mat-icon>
+                                            </button>
+                                            <button mat-mini-fab color="primary"
+                                                style="width: 30px; height: 30px; margin:5px;"
+                                                (click)="deletePost(post)">
+                                                <mat-icon style="font-size: 20px;">delete</mat-icon>
+                                            </button>
+                                            <button mat-mini-fab color="primary"
+                                                style="width: 30px; height: 30px; margin:5px;"
+                                                (click)="commentPost(post)">
+                                                <mat-icon style="font-size: 20px;">comment</mat-icon>
+                                            </button>
+
+                                        </div>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                <tr>
+
+                                </tr>
+
+
+                                <tr>
+                                    <mat-tab-group fxFlex mat-align-tabs="center" animationDuration="1000ms"
+                                        color="accent" focusIndex="1">
+
+                                        <mat-tab label="Comments">
+
+                                            <div><span>
+                                                    Number of comments: {{getNumber(post?.id)}}
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <mat-card *ngFor="let comment of post.comments"
+                                                    style="margin-top: 5px;">
+                                                    <mat-card-header fxLayout="row" fxLayoutAlign="start center"
+                                                        *ngIf="!comment.deleted">
+                                                        <div fxFlex="">
+                                                            <mat-card-title></mat-card-title>
+                                                            <br />
+                                                            <mat-card-subtitle *ngIf="comment?.userName == post?.user">
+                                                                <div style="color:rebeccapurple;">
+                                                                    <mat-icon style="vertical-align: middle;"
+                                                                        color="accent">person</mat-icon>
+                                                                    {{comment?.userName}}
+                                                                </div>
+                                                            </mat-card-subtitle>
+                                                            <mat-card-subtitle *ngIf="comment?.userName !== post?.user">
+                                                                <div style="color:sandybrown;">
+                                                                    <mat-icon style="vertical-align: middle;"
+                                                                        color="accent">person</mat-icon>
+                                                                    {{comment?.userName}}
+                                                                </div>
+                                                            </mat-card-subtitle>
+
+                                                        </div>
+
+                                                    </mat-card-header>
+                                                    <mat-card-content *ngIf="!comment.deleted">
+                                                        <div>
+                                                            {{comment.content}}
+                                                        </div>
+
+                                                    </mat-card-content>
+                                                    <mat-card-footer *ngIf="!comment.deleted">
+                                                        <div style="display: flex;
+                                                        flex-direction: row; bottom:0; margin-left: 10px; font-size: 70%;">
+                                                            <mat-icon style="font-size: 20px;">query_builder</mat-icon>
+                                                            {{getDate(comment) | date : 'yyyy-MM-dd HH:mm:ss'}}
+                                                        </div>
+                                                        <div
+                                                            style="padding:10px; position: absolute; bottom: 0; right: 0; display: inline-block;">
+                                                            <button mat-icon-button color="primary" style=" size: 2px; "
+                                                                (click)="editComment(comment)">
+                                                                <mat-icon>edit</mat-icon>
+                                                            </button>
+
+                                                            <button mat-icon-button color="primary" style=" size: 2px; "
+                                                                (click)="deleteComment(comment)">
+                                                                <mat-icon>delete</mat-icon>
+                                                            </button>
+                                                        </div>
+                                                    </mat-card-footer>
+
+                                                </mat-card>
+                                            </div>
+
+                                        </mat-tab>
+                                        <mat-tab label="Hide comments">
+                                            <div>Comments are hidden</div>
+                                        </mat-tab>
+                                    </mat-tab-group>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                        <div fxFlex></div>
+                    </mat-card-content>
+                </div>
+
+            </div>
+
+        </mat-card>
+
+        <mat-paginator [pageSize]="10" showFirstLastButtons>
+        </mat-paginator>
+    </div>
+
+</div>

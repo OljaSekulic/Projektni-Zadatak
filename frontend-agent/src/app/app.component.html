@@ -1,0 +1,17 @@
+<p>
+        <mat-toolbar color="primary">
+
+                <span>Wall Service</span>
+                <span class="example-spacer"></span>
+                <button mat-icon-button>
+                        <mat-icon>person</mat-icon>{{getUser()}}
+                </button>
+                &nbsp;&nbsp;&nbsp;
+                <button (click)="logout()" mat-icon-button >
+                        <mat-icon>logout</mat-icon>
+                </button>
+        </mat-toolbar>
+</p>
+<div class="content">
+        <router-outlet></router-outlet>
+</div>

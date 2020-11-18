@@ -1,0 +1,16 @@
+<section fxFlex="100%" fxLayout="column" fxLayoutAlign="center center" style="margin-top: 100px;">
+    <h1>Edit comment</h1>
+    <br>
+    <form [formGroup]="commentUpdateForm" fxLayout="column" fxLayoutAlign="center center">
+
+
+        <mat-form-field>
+            <input type="text" matInput formControlName="content" placeholder="Edit content" required
+                [(ngModel)]="local_data.content">
+        </mat-form-field>
+        <div>
+            <button mat-raised-button color="accent" (click)="onNoClick()">Cancel</button> &nbsp;
+            <button mat-raised-button color="accent" (click)="onSubmitUpdate(local_data)">Edit</button>
+        </div>
+    </form>
+</section>

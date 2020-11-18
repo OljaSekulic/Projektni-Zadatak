@@ -1,0 +1,30 @@
+<section fxFlex="100%" fxLayout="column" fxLayoutAlign="center center" style="margin-top: 10px;" *ngIf="data.isAdd">
+    <h1>Create new post</h1>
+    <br>
+    <form [formGroup]="createForm" fxLayout="column" fxLayoutAlign="center center">
+
+        <mat-form-field>
+            <input type="text" matInput formControlName="text" placeholder="Text" required>
+        </mat-form-field>
+        <div>
+            <button mat-raised-button color="accent" (click)="onNoClick()">Cancel</button>&nbsp;
+            <button mat-raised-button color="accent" (click)="onSubmit()">Create</button>
+        </div>
+    </form>
+</section>
+
+<section fxFlex="100%" fxLayout="column" fxLayoutAlign="center center" style="margin-top: 100px;" *ngIf="!data.isAdd">
+    <h1>Update Post</h1>
+    <br>
+    <form [formGroup]="postUpdateForm" fxLayout="column" fxLayoutAlign="center center" *ngIf="!data.isAdd">
+
+
+        <mat-form-field>
+            <input type="text" matInput formControlName="text" placeholder="Text" required
+                [(ngModel)]="local_data.text">
+        </mat-form-field>
+        <div>
+            <button mat-raised-button color="accent" type="submit" (click)="onSubmitUpdate(local_data)">Edit</button>
+        </div>
+    </form>
+</section>

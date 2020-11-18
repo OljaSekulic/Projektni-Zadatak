@@ -1,0 +1,63 @@
+<div fxLayout="column" fxLayoutAlign="center center">
+    <mat-card class="example-card" fxFlex style="width: 30%; padding: 30px; margin-top: 150px;">
+
+        <form [formGroup]="loginForm" *ngIf="login" (submit)="onSubmitLogin()">
+            <mat-card-content style="text-align: center;">
+                <h1>Login</h1>
+                <div fxLayout="column" fxLayoutAlign="center">
+                    <mat-form-field fxFlex appearance="outline">
+                        <mat-label>Username</mat-label>
+                        <input matInput formControlName="username">
+                    </mat-form-field>
+                    <mat-form-field fxFlex appearance="outline">
+                        <mat-label>Password</mat-label>
+                        <input matInput formControlName="password" type="password">
+                    </mat-form-field>
+                </div>
+
+
+                <p>
+                    Don't have an account?
+                    <button type="button" mat-button (click)="switchForms()">Sign Up!</button>
+                </p>
+
+            </mat-card-content>
+            <mat-card-actions fxLayout="row" fxLayoutAlign="center">
+                <button mat-raised-button type="submit" color="accent">Log In</button>
+            </mat-card-actions>
+        </form>
+
+        <form [formGroup]="signupForm" *ngIf="!login" (submit)="signupSubmit()">
+            <mat-card-content style="text-align: center;">
+                <h1>Registration</h1>
+                <div fxLayout="column" fxLayoutAlign="center">
+                    <mat-form-field fxFlex appearance="outline">
+                        <mat-label>Username</mat-label>
+                        <input matInput formControlName="username" type="username">
+                    </mat-form-field>
+                    <br />
+                    <mat-form-field fxFlex appearance="outline">
+                        <mat-label>Password</mat-label>
+                        <input matInput formControlName="password" type="password">
+                    </mat-form-field>
+                    <br />
+                    <mat-form-field fxFlex appearance="outline">
+                        <mat-label>Repeat password</mat-label>
+                        <input required matInput formControlName="passwordConfirm" type="password">
+                    </mat-form-field>
+
+                </div>
+
+
+            </mat-card-content>
+            <mat-card-actions fxLayout="row" fxLayoutAlign="center center">
+                <button
+                    [disabled]="(signupForm && signupForm.controls['passwordConfirm'].errors && signupForm.controls['passwordConfirm'].errors.mustMatch)"
+                    mat-raised-button type="submit" color="accent">Sign Up</button>
+            </mat-card-actions>
+
+        </form>
+    </mat-card>
+
+
+</div>
