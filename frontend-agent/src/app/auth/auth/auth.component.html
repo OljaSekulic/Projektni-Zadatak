@@ -38,8 +38,10 @@
                     <br />
                     <mat-form-field fxFlex appearance="outline">
                         <mat-label>Password</mat-label>
-                        <input matInput formControlName="password" type="password">
+                        <input  matInput formControlName="password" type="password">
+                        <mat-error>You need to enter at least 10 characters, uppercase, lowercase, and some of the following characters: #$@!%&*?</mat-error>
                     </mat-form-field>
+                    <br />
                     <br />
                     <mat-form-field fxFlex appearance="outline">
                         <mat-label>Repeat password</mat-label>
@@ -52,7 +54,7 @@
             </mat-card-content>
             <mat-card-actions fxLayout="row" fxLayoutAlign="center center">
                 <button
-                    [disabled]="(signupForm && signupForm.controls['passwordConfirm'].errors && signupForm.controls['passwordConfirm'].errors.mustMatch)"
+                    [disabled]="signupForm.invalid"
                     mat-raised-button type="submit" color="accent">Sign Up</button>
             </mat-card-actions>
 

@@ -51,12 +51,7 @@ public class PostController {
 	
 	@GetMapping(value = "/all", produces = "application/json")
 	public ResponseEntity<?> allPosts() {
-		List<Post> posts = new ArrayList<Post>();
-		List<Post> list = postRepository.findAll();
-		for(Post p : list) {
-			if(p.isDeleted() == false)
-				posts.add(p);
-		}
+		List<Post> posts = postService.getAll();
 		return new ResponseEntity<>(posts, HttpStatus.OK);
 	}
 	

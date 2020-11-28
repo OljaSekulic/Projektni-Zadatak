@@ -1,7 +1,10 @@
 package xwsagent.wallservice.service;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +22,20 @@ public class CommentService {
 	
 	@Autowired
 	PostService postService;
+	
+	public List<Comment> getAll(Long id) {
+		List<Comment> comments = commentRepository.findAll();
+		List<Comment> list = new ArrayList<Comment>();
+		for(Comment comment : comments) {
+			if(comment.getId() == id) {
+				if(!comment.isDeleted())
+					list.add(comment);
+			}
+		}
+		list.sort(Comparator.comparing(Comment:: getCommentDate).reversed());
+		
+		return list;
+	}
 	
 	public Comment addComment(CommentDTO dto, Long id) {
 		Post post = postService.findById(id);
@@ -54,4 +71,6 @@ public class CommentService {
 		commentRepository.save(comment);
 			
 	}
+	
+	
 }

@@ -20,6 +20,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -38,6 +40,7 @@ public class User implements UserDetails{
 
 	@Column(name="username", nullable = false, unique = true)
 	private String username;
+	
 	
 	@Column(name="password", nullable = false)
 	private String password;

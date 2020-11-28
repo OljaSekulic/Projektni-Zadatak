@@ -17,9 +17,8 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./new-post.component.css']
 })
 export class NewPostComponent implements OnInit {
-
+  
   createForm: FormGroup;
-  success = false;
   errorMessage = false
   post: Post = new Post();
   new: Post = new Post();
@@ -32,7 +31,6 @@ export class NewPostComponent implements OnInit {
   currentDate: Date;
   fiveMinutes: number = 5;
   pipe = new DatePipe('en-US');
-
 
   constructor(private formBuilder: FormBuilder,
     private postService: PostService,
@@ -71,9 +69,8 @@ export class NewPostComponent implements OnInit {
           }
         )
       },
-
-        error => {
-        });
+      error => {
+      });
   }
 
   onSubmit() {
@@ -87,15 +84,14 @@ export class NewPostComponent implements OnInit {
     this.currentDate = new Date();
     let datum = post.postDate.toString();
     let minute = Number(datum.substring(14, 16));
+    console.log(this.currentDate.getMinutes() + ' ' +  minute + ' ' + datum)
     if ((this.currentDate.getMinutes() - minute) >= 5) {
       if (this.user.username == post.user) {
         this.postService.update(post.id, this.local_data).subscribe(
           data => {
             this.toastr.success('You have successfully edited post!', 'Success')
-
           },
           error => {
-
           }
         );
       } else {
@@ -110,7 +106,6 @@ export class NewPostComponent implements OnInit {
 
   back() {
     this.errorMessage = false;
-    this.success = false;
 
   }
 

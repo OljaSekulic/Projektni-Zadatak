@@ -7,7 +7,7 @@
 
 
     <div>
-        <mat-card *ngFor="let post of posts" style="margin-top: 50px;">
+        <mat-card *ngFor="let post of posts" style="margin-top: 50px; background-color: rgb(109, 109, 109);">
             <div fxLayout="row" fxLayoutAlign="center center">
 
                 <div fxFlex>
@@ -30,7 +30,7 @@
                             <tbody>
 
                                 <tr>
-                                    <td style="font-weight:300; font-size: medium;">Text: {{post?.text}}</td>
+                                    <td style="font-weight:300; font-size: medium;">{{post?.text}}</td>
 
                                 </tr>
                                 <tr style="font-size: 80%;">
@@ -79,21 +79,21 @@
                                             </div>
                                             <div>
                                                 <mat-card *ngFor="let comment of post.comments"
-                                                    style="margin-top: 5px;">
+                                                    style="margin-top: 5px; background-color: rgb(158, 158, 158);">
                                                     <mat-card-header fxLayout="row" fxLayoutAlign="start center"
                                                         *ngIf="!comment.deleted">
                                                         <div fxFlex="">
                                                             <mat-card-title></mat-card-title>
                                                             <br />
                                                             <mat-card-subtitle *ngIf="comment?.userName == post?.user">
-                                                                <div style="color:rebeccapurple;">
+                                                                <div style="color:rgb(153, 51, 93); ">
                                                                     <mat-icon style="vertical-align: middle;"
                                                                         color="accent">person</mat-icon>
                                                                     {{comment?.userName}}
                                                                 </div>
                                                             </mat-card-subtitle>
                                                             <mat-card-subtitle *ngIf="comment?.userName !== post?.user">
-                                                                <div style="color:sandybrown;">
+                                                                <div style="color:white;">
                                                                     <mat-icon style="vertical-align: middle;"
                                                                         color="accent">person</mat-icon>
                                                                     {{comment?.userName}}
@@ -149,8 +149,8 @@
             </div>
 
         </mat-card>
-
-        <mat-paginator [pageSize]="10" showFirstLastButtons>
+        <br/>
+        <mat-paginator [pageSize]="10" [length]="dataSource?.data?.length" showFirstLastButtons>
         </mat-paginator>
     </div>
 

@@ -55,7 +55,10 @@ export class AuthComponent implements OnInit {
 
     this.signupForm = this.formBuilder.group({
       'username': new FormControl(null, Validators.required),
-      'password': new FormControl(null, Validators.required),
+      'password': new FormControl("1", Validators.compose([
+        Validators.required,
+        Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[#$@!%&*?])[A-Za-z\\d#$@!%&*?]{10,20}$")
+      ])),
       'passwordConfirm': new FormControl(null, [Validators.required])
 
     },
@@ -92,8 +95,9 @@ export class AuthComponent implements OnInit {
       error => {
         this.isLoading = false;
         this.isSignUpFailed = true;
+        this.toastr.error('Username already exists!', 'Error');
         location.reload();
-        this.toastr.error('Username is already taken!', 'Error');
+        
       }
     );
     

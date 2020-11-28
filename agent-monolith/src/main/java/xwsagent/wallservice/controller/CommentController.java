@@ -37,14 +37,8 @@ public class CommentController {
 	
 	@GetMapping(value = "/all/{id}", produces = "application/json")
 	public ResponseEntity<?> allComments(@PathVariable Long id) {
-		List<Comment> comments = commentRepository.findAll();
-		List<Comment> list = new ArrayList<Comment>();
-		for(Comment comment : comments) {
-			if(comment.getId() == id) {
-				if(!comment.isDeleted())
-					list.add(comment);
-			}
-		}
+		List<Comment> list = commentService.getAll(id);
+		
 		
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}

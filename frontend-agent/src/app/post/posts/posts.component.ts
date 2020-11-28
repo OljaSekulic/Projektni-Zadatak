@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth/service/auth.service';
 import { NewCommentComponent } from 'src/app/comment/new-comment/new-comment.component';
 import { CommentService } from 'src/app/comment/new-comment/service/comment.service';
@@ -11,15 +10,15 @@ import { interval } from 'rxjs';
 import { Comment } from '../../../model/comment';
 import { EditCommentComponent } from 'src/app/comment/edit/edit-comment/edit-comment.component';
 import { ToastrService } from 'ngx-toastr';
-import { Input } from '@angular/core';
-import { Output } from '@angular/core';
-import { EventEmitter } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
 import { AfterViewInit } from '@angular/core';
 import { StarRatingComponent } from 'ng-starrating/components/star-rating/star-rating.component';
 import { RateService } from './service/rate.service';
 import { Rate } from 'src/model/rate';
 import { Subscription } from 'rxjs/internal/Subscription';
+import { MatTableDataSource } from '@angular/material/table';
+import { ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 
 
 
@@ -51,6 +50,9 @@ export class PostsComponent implements OnInit, AfterViewInit {
   r: Rate = new Rate();
   source: any;
   subscription: Subscription;
+  
+  dataSource: MatTableDataSource<Post>;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(private postService: PostService,
     public dialog: MatDialog,
@@ -122,7 +124,7 @@ export class PostsComponent implements OnInit, AfterViewInit {
   openModalDialog(): void {
     const dialogRef = this.dialog.open(NewPostComponent, {
       width: '500px',
-      height: '400px',
+      height: '250px',
       data: { isAdd: this.isAdd = true }
     });
 
@@ -131,8 +133,10 @@ export class PostsComponent implements OnInit, AfterViewInit {
         data => {
           this.posts = data;
           console.log(this.posts)
+          this.dataSource = new MatTableDataSource(this.posts);
         }
       )
+      
     });
 
 
@@ -141,7 +145,7 @@ export class PostsComponent implements OnInit, AfterViewInit {
   editPost(post: Post): void {
     const dialogRef = this.dialog.open(NewPostComponent, {
       width: '500px',
-      height: '400px',
+      height: '200px',
       data: post
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -160,13 +164,14 @@ export class PostsComponent implements OnInit, AfterViewInit {
     if (this.user.username == post.user) {
       this.postService.delete(post.id).subscribe(
         data => {
-
           this.postService.allPosts().subscribe(
             data => {
               this.posts = data;
               console.log(this.posts)
+              this.dataSource = new MatTableDataSource(this.posts);
             }
           )
+          
           this.toastr.success('You have successfully deleted Post!', 'Success')
         }
       )
@@ -198,7 +203,7 @@ export class PostsComponent implements OnInit, AfterViewInit {
 
     const dialogRef = this.dialog.open(EditCommentComponent, {
       width: '500px',
-      height: '400px',
+      height: '200px',
       data: comment
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -281,7 +286,7 @@ export class PostsComponent implements OnInit, AfterViewInit {
         }
       )
     } else {
-      this.toastr.error('Error', 'Error');
+      this.toastr.error('You cannot rate a ' + 'post that is not from you', 'Error');
     }
 
   }

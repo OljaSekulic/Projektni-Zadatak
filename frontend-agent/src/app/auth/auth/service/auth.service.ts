@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { User } from '../../../../model/user';
 import { TokenStorageService } from './token-storage.service';
 import { Router } from '@angular/router';
@@ -52,7 +52,7 @@ export class AuthService {
         }
 
     registration(info: AuthSignupData): Observable<AuthResponseData> {
-        return this.http.post<AuthResponseData>(this.signupUrl, info);
+        return this.http.post<AuthResponseData>(this.signupUrl, info).pipe(catchError(this.handleException));
     }
 
     tryLogin(data: AuthLoginData): Observable<any> {
@@ -73,7 +73,9 @@ export class AuthService {
             return this.http.get<AuthLoginData[]>(this.usersUrl, httpOptions);
           }
 
-
+          private handleException(err: HttpErrorResponse): Observable<never> {
+            return throwError(err.error);
+          }
     }
 
 

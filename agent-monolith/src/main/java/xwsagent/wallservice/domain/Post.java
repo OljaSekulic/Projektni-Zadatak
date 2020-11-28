@@ -38,7 +38,7 @@ public class Post {
 	@OneToMany(mappedBy = "post")
 	private Set<Rate> rates;
 	
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone="Europe/Belgrade")
 	@Column(nullable = false)
 	private Date postDate;
 	
